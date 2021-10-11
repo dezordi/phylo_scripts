@@ -24,7 +24,7 @@ Aviso: Caso o município esteja escrito de forma incorreta no gisaid, a busca po
 Caso necessário, um abiente conda pode ser importado para execução do script: 
 
 .. code:: bash
+
     conda env create -f envs/gisaid_loc_beast.yml
     conda activate gisaid_loc_beast
     python gisaid_loc_beauti.py -fa <alinhamento.fasta> -mt <metadados.tsv> -ct <municipios.csv> 
-
