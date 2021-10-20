@@ -28,3 +28,25 @@ Caso necessário, um abiente conda pode ser importado para execução do script:
     conda env create -f envs/gisaid_loc_beast.yml
     conda activate gisaid_loc_beast
     python gisaid_loc_beauti.py -fa <alinhamento.fasta> -mt <metadados.tsv> -ct <municipios.csv> 
+
+=====
+nextstrain_br.py (em desenvolvimento)
+=====
+
+Esse script executa todas as análises do nextstrain relacionadas à geração de um dataset de amostragem a partir de todos os genomas no gisaid.
+
+* -fa: Arquivo com todos os genomas do gisaid, recuperado através do menu Download no gisaid, ver o tutorial aqui.
+* -dr: Caminho para o diretório do nextstrain no seu ambiente, exemplo: '../ncov/''
+* -mt: Arquivo com todos os metadados do gisaid, recuperado através do menu Download no gisaid, ver o tutorial aqui.
+* -st: Estado brasileiro alvo, exemplo: 'Pernambuco'
+* -sp: Parâmetro utilizado caso o usuário queira definir um número limite de genomas do estado, se não for definido, todos os genomas que se enquadram nas linhagems específicadas serão recuperados
+* -li: Arquivo txt com uma linhagem (Pango lineage) em cada linha
+* -n: Número de genomas esperados sem contar com o estado alvo, por exemplo, se for setado 5000, o nextstrain tentará recuperar 2500 genomas do Brasil mais 2500 genomas do resto do mundo.
+
+Caso necessário, um abiente conda pode ser importado para execução do script: 
+
+.. code:: bash
+
+    conda env create -f envs/nextstrain_br.yml
+    conda activate nextstrain_br
+    python nextstrain_br.py -fa <gisaid_fasta.tar.xz> -dr ncov/ -mt <gisaid_metadata.tar.xz> -st Pernambuco -li <lineage_file.txt> -n 5000
