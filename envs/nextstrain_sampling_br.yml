@@ -1,4 +1,4 @@
-name: nextstrain_br
+name: nextstrain_sampling_br
 channels:
   - bioconda
   - conda-forge
@@ -268,4 +268,4 @@ dependencies:
   - zipp=3.6.0=pyhd3eb1b0_0
   - zlib=1.2.11=h36c2ea0_1013
   - zstd=1.5.0=ha95c52a_0
-prefix: /home/filipe/.conda/envs/nextstrain_br
+prefix: /home/filipe/.conda/envs/nextstrain_sampling_br

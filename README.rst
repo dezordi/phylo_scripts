@@ -30,7 +30,7 @@ Caso necessário, um abiente conda pode ser importado para execução do script:
     python gisaid_loc_beauti.py -fa <alinhamento.fasta> -mt <metadados.tsv> -ct <municipios.csv> 
 
 =====
-nextstrain_br.py (em desenvolvimento)
+nextstrain_sampling_br.py
 =====
 
 Esse script executa todas as análises do nextstrain relacionadas à geração de um dataset de amostragem a partir de todos os genomas no gisaid.
@@ -42,11 +42,12 @@ Esse script executa todas as análises do nextstrain relacionadas à geração d
 * -sp: Parâmetro utilizado caso o usuário queira definir um número limite de genomas do estado, se não for definido, todos os genomas que se enquadram nas linhagems específicadas serão recuperados
 * -li: Arquivo txt com uma linhagem (Pango lineage) em cada linha
 * -n: Número de genomas esperados sem contar com o estado alvo, por exemplo, se for setado 5000, o nextstrain tentará recuperar 2500 genomas do Brasil mais 2500 genomas do resto do mundo.
-
+* -le: Tamanho mínimo dos genomas, o default é 28400, indicando que o sampling só ocorrerá em genomas com cerca 95% de cobertura ((28400/29903)*100 = 94,97%)
+* 
 Caso necessário, um abiente conda pode ser importado para execução do script: 
 
 .. code:: bash
 
-    conda env create -f envs/nextstrain_br.yml
-    conda activate nextstrain_br
-    python nextstrain_br.py -fa <gisaid_fasta.tar.xz> -dr ncov/ -mt <gisaid_metadata.tar.xz> -st Pernambuco -li <lineage_file.txt> -n 5000
+    conda env create -f envs/nextstrain_sampling_br.yml
+    conda activate nextstrain_sampling_br
+    python nextstrain_sampling_br.py -fa <gisaid_fasta.tar.xz> -dr ncov/ -mt <gisaid_metadata.tar.xz> -st Pernambuco -li <lineage_file.txt> -n 5000
