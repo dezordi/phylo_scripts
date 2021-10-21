@@ -51,7 +51,6 @@ def get_region(metadata,index,length,lineage,region,sampling,output):
         --min-length {str(length)} \
         --query "(country == 'Brazil') & (pango_lineage == {lineage}) & (division == '{region}')" \
         --exclude-ambiguous-dates-by any \
-        --group-by location pango_lineage year month 
         --output-strains {output}'''
     else:
         sampling_state = f'''augur filter \
