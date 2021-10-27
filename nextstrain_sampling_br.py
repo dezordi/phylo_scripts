@@ -32,10 +32,10 @@ def get_br(metadata,index,length,lineage,number,region,output):
     --metadata {metadata} \
     --sequence-index {index} \
     --min-length {str(length)} \
-    --query "(country == 'Brazil') & (pango_lineage == {lineage}) & (division != '{region}')" \
+    --query "(country == 'Brazil') & (pango_lineage == {lineage}) & (division != '{region}') & (host == 'Human')" \
     --subsample-max-sequences {str(number)}  \
     --exclude-ambiguous-dates-by any \
-    --group-by division pango_lineage year month \
+    --group-by pango_lineage division year month \
     --output-strains {output}'''
     sampling_br = shlex.split(sampling_br)
     cmd_sampling_br = subprocess.Popen(sampling_br)
@@ -49,7 +49,7 @@ def get_region(metadata,index,length,lineage,region,sampling,output):
         --metadata {metadata} \
         --sequence-index {index} \
         --min-length {str(length)} \
-        --query "(country == 'Brazil') & (pango_lineage == {lineage}) & (division == '{region}')" \
+        --query "(country == 'Brazil') & (pango_lineage == {lineage}) & (division == '{region}') & (host == 'Human')" \
         --exclude-ambiguous-dates-by any \
         --output-strains {output}'''
     else:
@@ -57,10 +57,10 @@ def get_region(metadata,index,length,lineage,region,sampling,output):
         --metadata {metadata} \
         --sequence-index {index} \
         --min-length {str(length)} \
-        --query "(country == 'Brazil') & (pango_lineage == {lineage}) & (division == '{region}')" \
+        --query "(country == 'Brazil') & (pango_lineage == {lineage}) & (division == '{region}') & (host == 'Human')" \
         --subsample-max-sequences {str(sampling)}
         --exclude-ambiguous-dates-by any \
-        --group-by location pango_lineage year month 
+        --group-by pango_lineage location year month 
         --output-strains {output}'''
     sampling_state = shlex.split(sampling_state)
     cmd_sampling_state = subprocess.Popen(sampling_state)
@@ -73,10 +73,10 @@ def get_global(metadata,index,length,lineage,number,output):
     --metadata {metadata} \
     --sequence-index {index} \
     --min-length {str(length)} \
-    --query "(country != 'Brazil') & (pango_lineage == {lineage})" \
+    --query "(country != 'Brazil') & (pango_lineage == {lineage}) & (host == 'Human')" \
     --subsample-max-sequences {str(number)} 
     --exclude-ambiguous-dates-by any \
-    --group-by country pango_lineage year month \
+    --group-by pango_lineage country year month \
     --output-strains {output}'''
     sampling_global = shlex.split(sampling_global)
     cmd_sampling_global = subprocess.Popen(sampling_global)
@@ -89,10 +89,10 @@ def get_outgroup(metadata,index,length,output):
     --metadata {metadata} \
     --sequence-index {index} \
     --min-length {str(length)} \
-    --query "pango_lineage == ['A','B'] " \
+    --query "pango_lineage == ['A','B'] & (host == 'Human')" \
     --subsample-max-sequences 30 \
     --exclude-ambiguous-dates-by any \
-    --group-by country pango_lineage year month \
+    --group-by pango_lineage country year month \
     --output-strains {output}'''
     sampling_groupA = shlex.split(sampling_groupA)
     cmd_sampling_groupA = subprocess.Popen(sampling_groupA)
@@ -101,7 +101,6 @@ def get_outgroup(metadata,index,length,output):
 
 with open(args.lineage_data, 'r') as lineage_data:
     lineage_list = [line.strip('\n') for line in lineage_data.readlines()]
-
 ##sanitize sequences
 print("="*40,"Step1: Sanitize sequences","="*40)
 sanitize_sequences = f"python {args.ncov_dir}scripts/sanitize_sequences.py \
@@ -128,7 +127,7 @@ print("="*40,"Step3: Sanitize metadata","="*40)
 sanitize_metadata = f"python {args.ncov_dir}scripts/sanitize_metadata.py \
     --metadata {args.meta_data} \
     --parse-location-field Location \
-    --rename-fields 'Virus name=strain' 'Accession ID=gisaid_epi_isl' 'Collection date=date' 'Pango lineage=pango_lineage' \
+    --rename-fields 'Virus name=strain' 'Accession ID=gisaid_epi_isl' 'Collection date=date' 'Pango lineage=pango_lineage' 'Host=host' \
     --strip-prefixes 'hCoV-19/' \
     --output {args.ncov_dir}data/metadata_gisaid.tsv.gz"
 sanitize_metadata = shlex.split(sanitize_metadata)
